@@ -13,6 +13,10 @@ import (
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/files"
 )
 
+func validateLatexValue(value string) string {
+	value = strings.ReplaceAll(value, "\\", "\textbackslash")
+	return value
+}
 func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, error) {
 	filepath := path.Join(config.CurrentConfig.TemplatePath, name+".tex")
 	if _, err := os.Stat(filepath); errors.Is(err, os.ErrNotExist) {
@@ -30,7 +34,7 @@ func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, 
 	s := string(b)
 	for key, value := range arguments {
 		value = strings.Replace(value, "\n", " \\\\\n", -1)
-		s = strings.ReplaceAll(s, "__"+strings.ToUpper(key)+"__", value)
+		s = strings.ReplaceAll(s, "__"+strings.ToUpper(key)+"__", validateLatexValue(value))
 	}
 
 	file, err := os.Create(path.Join(dir, "latex.tex"))
