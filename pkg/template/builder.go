@@ -15,6 +15,7 @@ import (
 
 func validateLatexValue(value string) string {
 	value = strings.ReplaceAll(value, "\\", "\\textbackslash")
+	value = strings.ReplaceAll(value, "\n", "\\\\\n")
 	return value
 }
 func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, error) {
