@@ -30,7 +30,7 @@ func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, 
 	s := string(b)
 	for key, value := range arguments {
 		value = strings.Replace(value, "\n", " \\\\\n", -1)
-		s = strings.Replace(s, "__"+strings.ToUpper(key)+"__", value, -1)
+		s = strings.ReplaceAll(s, "__"+strings.ToUpper(key)+"__", value)
 	}
 
 	file, err := os.Create(path.Join(dir, "latex.tex"))
