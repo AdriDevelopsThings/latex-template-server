@@ -1,0 +1,10 @@
+version: "3"
+services:
+  latex-template-server:
+    build: .
+    restart: unless-stopped
+    ports:
+    - 80:80
+    volumes:
+    - ./configuration.yml:/dist/configuration.yml
+    - ./templates:/dist/templates
