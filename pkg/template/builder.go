@@ -34,7 +34,6 @@ func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, 
 	}
 	s := string(b)
 	for key, value := range arguments {
-		value = strings.Replace(value, "\n", " \\\\\n", -1)
 		s = strings.ReplaceAll(s, "__"+strings.ToUpper(key)+"__", validateLatexValue(value))
 	}
 
