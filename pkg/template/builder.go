@@ -22,7 +22,6 @@ func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, 
 	if err != nil {
 		return nil, err
 	}
-	defer os.RemoveAll(dir)
 
 	b, err := os.ReadFile(filepath)
 	if err != nil {
@@ -51,5 +50,6 @@ func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, 
 	if err != nil {
 		return nil, err
 	}
+	os.RemoveAll(dir)
 	return files.WriteFile(name+".pdf", pdf)
 }
