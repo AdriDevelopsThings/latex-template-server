@@ -24,7 +24,7 @@ func GetFile(c *gin.Context) {
 		return
 	}
 	c.Writer.WriteHeader(http.StatusOK)
-	c.Header("Content-Disposition", "attachment; filename="+name)
+	c.Header("Content-Type", "application/pdf")
 	c.Header("Content-Length", fmt.Sprint(len(content)))
 	c.Writer.Write(content)
 }
