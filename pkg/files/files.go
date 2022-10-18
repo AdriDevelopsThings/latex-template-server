@@ -4,6 +4,7 @@ import (
 	"math/rand"
 	"os"
 	"path"
+	"strings"
 	"time"
 
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/apierrors"
@@ -36,6 +37,9 @@ func GetFilePath(id string, name string) string {
 }
 
 func ReadFile(id string, name string, encryption_key string) ([]byte, error) {
+	if strings.Contains(id, "/") || strings.Contains(name, "/") || strings.Contains(encryption_key, "/") {
+		return nil, apierrors.FileDoesNotExist
+	}
 	filepath := GetFilePath(id, name)
 	content, err := os.ReadFile(filepath)
 	if os.IsNotExist(err) {

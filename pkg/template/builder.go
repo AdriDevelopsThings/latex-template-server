@@ -19,6 +19,9 @@ func validateLatexValue(value string) string {
 	return value
 }
 func BuildTemplate(name string, arguments map[string]string) (*files.FileInfos, error) {
+	if strings.Contains(name, "/") || strings.Contains(name, "\\") || strings.Contains(name, ".") {
+		return nil, apierrors.TemplateDoesNotExist
+	}
 	filepath := path.Join(config.CurrentConfig.TemplatePath, name+".tex")
 	if _, err := os.Stat(filepath); errors.Is(err, os.ErrNotExist) {
 		return nil, apierrors.TemplateDoesNotExist
