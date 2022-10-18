@@ -12,7 +12,7 @@ import (
 var apiEnginge *gin.Engine
 
 func createRouter() {
-	apiEnginge = gin.Default()
+	apiEnginge = gin.New()
 	apiEnginge.Use(cors.Default())
 
 	apiEnginge.GET("/file/:id/:encryptionKey/:name", GetFile)
