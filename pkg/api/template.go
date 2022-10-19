@@ -11,7 +11,7 @@ import (
 )
 
 type SubmitTemplateArguments struct {
-	Arguements map[string]string `json:"arguments"`
+	Arguements []map[string]string `json:"arguments"`
 }
 
 func SubmitTemplate(c *gin.Context) {
