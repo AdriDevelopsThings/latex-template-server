@@ -11,7 +11,7 @@ WORKDIR /dist
 COPY --from=0 /build/main /dist/main
 
 
-RUN apk add --no-cache texlive
+RUN apk add --no-cache texlive-full
 
 ENV LISTEN_HOST=0.0.0.0
 ENV LISTEN_PORT=80
