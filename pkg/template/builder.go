@@ -89,7 +89,7 @@ func BuildTemplate(name string, arguments []map[string]string) (*files.FileInfos
 	//  create arguments csv
 	argumentsToCSV(path.Join(dir, "data.csv"), arguments)
 
-	cmd := exec.Command("pdflatex", "latex.tex")
+	cmd := exec.Command("pdflatex", "latex.tex", "-no-shell-escape")
 	cmd.Dir = dir
 	_, err = cmd.Output()
 	if err != nil {
