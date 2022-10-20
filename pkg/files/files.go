@@ -1,6 +1,7 @@
 package files
 
 import (
+	"fmt"
 	"math/rand"
 	"os"
 	"path"
@@ -25,7 +26,7 @@ func GenerateFileID() string {
 	for i := range b {
 		b[i] = charset[rand.Intn(len(charset))]
 	}
-	return string(b)
+	return string(b) + "_" + fmt.Sprint(time.Now().Unix())
 }
 
 func GetIDPath(id string) string {

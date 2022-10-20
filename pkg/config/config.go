@@ -22,6 +22,7 @@ type Config struct {
 	TemplatePath      string `yaml:"template_path"`
 	TmpDirectory      string `yaml:"tmp_directory"`
 	AppUrl            string `yaml:"app_url"`
+	DeleteFileAfter   int    `yaml:"delete_file_after"`
 }
 
 func setupDefaults() {
@@ -31,6 +32,7 @@ func setupDefaults() {
 	CurrentConfig.TemplatePath = "templates"
 	CurrentConfig.TmpDirectory = "tmp"
 	CurrentConfig.AppUrl = "http://localhost:3000"
+	CurrentConfig.DeleteFileAfter = 60 * 10 // 10 minutes
 }
 
 func validateConfig() error {
