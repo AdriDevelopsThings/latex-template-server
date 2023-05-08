@@ -29,7 +29,7 @@ delete_file_after: 600 # time after that a generated PDF file will be deleted, 6
 
 ## Create a LaTeX template
 
-Just create a file with the name `YOUR_TEMPLATE_NAME.tex` in the template directory configured in the `configured.yml` file. Here is an example for a LaTeX file that needs two parameters: `firstname` and `lastname`:
+Just create a file with the name `YOUR_TEMPLATE_NAME.tex` in the template directory configured in the `config.yml` file. Here is an example for a LaTeX file that needs two parameters: `firstname` and `lastname`:
 
 ```
 \documentclass{report}
