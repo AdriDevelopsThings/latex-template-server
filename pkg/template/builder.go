@@ -14,11 +14,11 @@ import (
 )
 
 const MAX_ARGUMENTS = 5
-const MAX_VALUE_LENGTH = 255
+const MAX_VALUE_LENGTH = 2048
 
 func validateLatexValue(value string) string {
 	if len(value) > MAX_VALUE_LENGTH {
-		value = value[:int(MAX_VALUE_LENGTH/1.5)]
+		value = value[:MAX_VALUE_LENGTH]
 	}
 	value = strings.ReplaceAll(value, "\\", "\\textbackslash")
 	value = strings.ReplaceAll(value, "\n", "\\\\")
