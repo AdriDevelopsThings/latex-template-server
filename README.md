@@ -52,7 +52,7 @@ Just create a file with the name `YOUR_TEMPLATE_NAME.tex` in the template direct
 ## Making api requests
 You can generate a PDF file from a LaTeX template:
 ```
-GET /template/YOUR_TEMPLATE_NAME HTTP/1.1
+POST /template/YOUR_TEMPLATE_NAME HTTP/1.1
 Content-Type: application/json
 
 {
