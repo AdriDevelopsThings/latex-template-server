@@ -15,7 +15,6 @@ func createRouter() {
 	apiEnginge = gin.New()
 	apiEnginge.Use(cors.Default())
 
-	apiEnginge.GET("/file/:id/:encryptionKey/:name", GetFile)
 	apiEnginge.POST("/template/:name", SubmitTemplate)
 
 	if os.Getenv("ENVIRONMENT") == "production" {

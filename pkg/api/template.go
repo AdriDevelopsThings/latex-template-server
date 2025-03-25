@@ -1,11 +1,11 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 
+	"fmt"
+
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/apierrors"
-	"github.com/AdriDevelopsThings/latex-template-server/pkg/config"
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/template"
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +21,7 @@ func SubmitTemplate(c *gin.Context) {
 		return
 	}
 
-	fileInfos, err := template.BuildTemplate(templateName, arguments.Arguements)
+	file, err := template.BuildTemplate(templateName, arguments.Arguements)
 	if err != nil {
 		serr, ok := err.(*apierrors.LatexTemplateServerError)
 		if ok {
@@ -31,6 +31,6 @@ func SubmitTemplate(c *gin.Context) {
 		}
 		return
 	}
-	link := config.CurrentConfig.AppUrl + fmt.Sprintf("/file/%s/%s/%s", fileInfos.ID, fileInfos.EncryptionKey, fileInfos.Name)
-	c.JSON(http.StatusOK, gin.H{"link": link})
+	c.Header("Content-Length", fmt.Sprint(len(file)))
+	c.Data(http.StatusOK, "application/pdf", file)
 }

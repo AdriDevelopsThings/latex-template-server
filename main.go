@@ -5,7 +5,6 @@ import (
 
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/api"
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/config"
-	"github.com/AdriDevelopsThings/latex-template-server/pkg/files"
 )
 
 func main() {
@@ -14,6 +13,5 @@ func main() {
 		fmt.Printf("Error while reading config file: %v\n", err)
 		return
 	}
-	go files.StartAutoDeleteFiles()
 	api.StartServer()
 }

@@ -10,7 +10,6 @@ import (
 
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/apierrors"
 	"github.com/AdriDevelopsThings/latex-template-server/pkg/config"
-	"github.com/AdriDevelopsThings/latex-template-server/pkg/files"
 )
 
 const MAX_ARGUMENTS = 5
@@ -37,7 +36,7 @@ func argumentsToCSV(filepath string, arguments []map[string]string) error {
 	argumentLength := len(arguments[0])
 	argumentIndex := make(map[string]int, 0)
 	i := 0
-	for key, _ := range arguments[0] {
+	for key := range arguments[0] {
 		argumentIndex[key] = i
 		file.WriteString(key + ",")
 		i++
@@ -48,7 +47,7 @@ func argumentsToCSV(filepath string, arguments []map[string]string) error {
 			continue
 		}
 		file.WriteString("\n")
-		for key, _ := range argument {
+		for key := range argument {
 			keys[argumentIndex[key]] = key
 		}
 		for _, key := range keys {
@@ -60,28 +59,28 @@ func argumentsToCSV(filepath string, arguments []map[string]string) error {
 	return nil
 }
 
-func BuildTemplate(name string, arguments []map[string]string) (*files.FileInfos, error) {
+func BuildTemplate(name string, arguments []map[string]string) ([]byte, error) {
 	if strings.Contains(name, "/") || strings.Contains(name, "\\") || strings.Contains(name, ".") {
-		return nil, apierrors.TemplateDoesNotExist
+		return []byte{}, apierrors.TemplateDoesNotExist
 	}
 	filepath := path.Join(config.CurrentConfig.TemplatePath, name+".tex")
 	if _, err := os.Stat(filepath); errors.Is(err, os.ErrNotExist) {
-		return nil, apierrors.TemplateDoesNotExist
+		return []byte{}, apierrors.TemplateDoesNotExist
 	}
 	dir, err := ioutil.TempDir(config.CurrentConfig.TmpDirectory, "template-"+name)
 	if err != nil {
-		return nil, err
+		return []byte{}, err
 	}
 
 	b, err := os.ReadFile(filepath)
 	if err != nil {
-		return nil, err
+		return []byte{}, err
 	}
 	s := string(b)
 
 	file, err := os.Create(path.Join(dir, "latex.tex"))
 	if err != nil {
-		return nil, err
+		return []byte{}, err
 	}
 	file.WriteString(s)
 	file.Close()
@@ -93,12 +92,12 @@ func BuildTemplate(name string, arguments []map[string]string) (*files.FileInfos
 	cmd.Dir = dir
 	_, err = cmd.Output()
 	if err != nil {
-		return nil, err
+		return []byte{}, err
 	}
 	pdf, err := os.ReadFile(path.Join(dir, "latex.pdf"))
 	if err != nil {
-		return nil, err
+		return []byte{}, err
 	}
 	os.RemoveAll(dir)
-	return files.WriteFile(name+".pdf", pdf)
+	return pdf, nil
 }
