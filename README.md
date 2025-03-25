@@ -17,14 +17,8 @@ server:
     listen:
         host: 0.0.0.0
         port: 80
-# it's required to set a salt value
-salt: "generate a secure random salt with pwgen for example (required)"
-app_url: "http://localhost:3000" # it's required to set the public url of the backend for link generation
-encryption_key_size: 48 # 48 = default value
-file_serve_path: "files" # directory where generated PDFs will be saved for X minutes, "files" = default value
 template_path: "templates" # directory which hosts all LaTeX templates, "templates" = default value
 tmp_directory: "tmp" # "tmp" = default value
-delete_file_after: 600 # time after that a generated PDF file will be deleted, 600 = default value
 ```
 
 ## Create a LaTeX template
@@ -66,11 +60,7 @@ Content-Type: application/json
 A response does look like this:
 ```
 HTTP/1.1 200 OK
-Content-Type: application/json
+Content-Type: application/pdf
 
-{
-    "link": "http://localhost:3000/file/id/encryption_key/filename
-}
+...
 ```
-
-You can download this file from this link for the `delete_time_after` configured in the `configuration.yml` file. As you can see, the files are encrypted with AES and the encryption_key supplied in the link to the filename.
